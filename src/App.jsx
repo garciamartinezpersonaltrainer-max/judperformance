@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-
 // ─── ICONS ───────────────────────────────────────────────────────────────────
 const Icon = ({ name, size = 20, color = "currentColor", className = "" }) => {
   const icons = {
@@ -1673,7 +1672,7 @@ const MiChatScreen = ({ onNavigate }) => {
     setMsg("");
   };
   return (
-    <div style={{display:"flex",flexDirection:"column",height:"100vh"}}>
+    <div style={{display:"flex",flexDirection:"column",minHeight:"calc(100vh - 70px)"}}>
       <div style={{background:C.card,padding:"12px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
         <button onClick={() => onNavigate("home")} style={{background:C.orange+"22",border:"none",borderRadius:12,padding:"7px 12px",display:"flex",alignItems:"center",gap:6,cursor:"pointer",flexShrink:0}}>
           <Icon name="home" size={15} color={C.orange}/>
@@ -1682,7 +1681,7 @@ const MiChatScreen = ({ onNavigate }) => {
         <div style={{width:38,height:38,borderRadius:12,background:C.orange,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,color:"#fff",fontSize:13,flexShrink:0}}>JP</div>
         <div><div style={{color:C.text,fontWeight:700}}>Juan (Tu Entrenador)</div><div style={{color:C.green,fontSize:12}}>● En línea</div></div>
       </div>
-      <div style={{flex:1,overflowY:"auto",padding:"16px",display:"flex",flexDirection:"column",gap:10,paddingBottom:80}}>
+      <div style={{flex:1,overflowY:"auto",padding:"16px",display:"flex",flexDirection:"column",gap:10,paddingBottom:140}}>
         {msgs.map(m => (
           <div key={m.id} style={{display:"flex",justifyContent:m.from==="me"?"flex-end":"flex-start"}}>
             <div style={{maxWidth:"75%",background:m.from==="me"?`linear-gradient(135deg,${C.orange},${C.orangeLight})`:C.card,border:m.from==="me"?"none":`1px solid ${C.border}`,borderRadius:m.from==="me"?"18px 18px 4px 18px":"18px 18px 18px 4px",padding:"10px 14px"}}>
@@ -2122,8 +2121,7 @@ export default function JUDStudioApp({ user: initialUser, onSignOut }) {
   ];
   const TABS = isTrainer ? TRAINER_TABS : CLIENT_TABS;
 
-  const hideBotNav = screen === "sesion-activa"
-    || (!isTrainer && screen === "mi-chat");
+  const hideBotNav = screen === "sesion-activa";
 
   const renderScreen = () => {
     if (screen === "login") return <LoginScreen onLogin={handleLogin} />;
@@ -2177,7 +2175,8 @@ export default function JUDStudioApp({ user: initialUser, onSignOut }) {
       <div className="screen" key={screen} style={{ flex:1, overflowY:"auto", paddingBottom: !hideBotNav ? 70 : 0 }}>
         {renderScreen()}
       </div>
-        {!hideBotNav && (<div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:480, background:C.card, borderTop:`1px solid ${C.border}`, display:"flex", alignItems:"center", padding:"8px 0", backdropFilter:"blur(20px)", zIndex:100 }}>
+      {!hideBotNav && (
+        <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:480, background:C.card, borderTop:`1px solid ${C.border}`, display:"flex", alignItems:"center", padding:"8px 0", backdropFilter:"blur(20px)", zIndex:100 }}>
           {TABS.map(tab => {
             const isActive = screen === tab.id;
             return (
