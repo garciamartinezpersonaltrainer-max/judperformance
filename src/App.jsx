@@ -2088,9 +2088,9 @@ const ClientsScreenFull = ({ onNavigate }) => {
 // ═══════════════════════════════════════════════════════════════════════════
 // ─── MAIN APP ─────────────────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════
-export default function JUDStudioApp() {
-  const [screen, setScreen] = useState("login");
-  const [user, setUser] = useState(null);
+export default function JUDStudioApp({ user: initialUser, onSignOut }) {
+  const [screen, setScreen] = useState("home");
+  const [user, setUser] = useState(initialUser);
   const [screenData, setScreenData] = useState(null);
   const [sessionCount, setSessionCount] = useState(DB.sessions.length);
 
@@ -2115,8 +2115,7 @@ export default function JUDStudioApp() {
   ];
   const TABS = isTrainer ? TRAINER_TABS : CLIENT_TABS;
 
-  const hideBotNav = screen === "login"
-    || screen === "sesion-activa"
+  const hideBotNav = screen === "sesion-activa"
     || (!isTrainer && screen === "mi-chat");
 
   const renderScreen = () => {
