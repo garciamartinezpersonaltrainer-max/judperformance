@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from './supabase.js'
+import { supabase } from './supabase.js'
 
 const C = {
   bg:"#0A0B0F", card:"#12141A", card2:"#1A1D26", border:"#252836",
@@ -111,7 +112,7 @@ export default function Onboarding({ userId, userEmail, onComplete }) {
       {/* Header */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 20px' }}>
         {step === 0 ? (
-          <button onClick={async () => { const { supabase: sb } = await import('./supabase.js'); await sb.auth.signOut(); window.location.reload(); }}
+          <button onClick={async () => { await supabase.auth.signOut(); window.location.reload(); }}
             style={{ background:'none', border:'none', cursor:'pointer', color:C.textDim, fontSize:13 }}>
             Salir
           </button>
