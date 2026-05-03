@@ -1452,9 +1452,6 @@ const LogrosScreen = ({ onNavigate }) => {
   return (
     <div style={{paddingBottom:20}}>
       <BackHeader title="Mis Logros 🏅" onBack={() => onNavigate("home")} />
-        <h2 style={{color:C.text,margin:0,fontSize:22,fontWeight:800}}>Mis medallas 🏅</h2>
-        <div style={{color:C.textMuted,fontSize:13,marginTop:6}}>{unlocked.length} de {LOGROS_DEF.length} logros desbloqueados · {totalSessions} sesiones</div>
-      </div>
       <div style={{padding:"16px"}}>
         {/* Próximo logro */}
         {nextLogro && (
