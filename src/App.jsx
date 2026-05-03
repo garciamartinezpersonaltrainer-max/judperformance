@@ -55,7 +55,17 @@ const C = {
   textDim: "#5A6275",
 };
 
-// ─── SAMPLE DATA ─────────────────────────────────────────────────────────────
+// ─── BACK HEADER ──────────────────────────────────────────────────────────────
+const BackHeader = ({ title, onBack, right }) => (
+  <div style={{ background:C.card, padding:"14px 16px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:12, position:"sticky", top:0, zIndex:10 }}>
+    <button onClick={onBack} style={{ background:C.orange+"22", border:"none", borderRadius:12, padding:"7px 12px", display:"flex", alignItems:"center", gap:6, cursor:"pointer", flexShrink:0 }}>
+      <Icon name="home" size={15} color={C.orange}/>
+      <span style={{ color:C.orange, fontWeight:700, fontSize:12 }}>Inicio</span>
+    </button>
+    <span style={{ color:C.text, fontWeight:700, fontSize:15, flex:1 }}>{title}</span>
+    {right}
+  </div>
+);
 const EXERCISES = [
   { id:1, name:"Press de Banca", category:"Pecho", muscle:"Pectorales", difficulty:"Intermedio", equipment:"Barra", sets:"3-4", reps:"8-12", video:"https://www.youtube.com/embed/4Y2ZdHCOXok", image:"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80", description:"Ejercicio compuesto para el desarrollo del pecho, hombros anteriores y tríceps.", tags:["fuerza","hipertrofia","empuje"] },
   { id:2, name:"Sentadilla", category:"Piernas", muscle:"Cuádriceps / Glúteos", difficulty:"Avanzado", equipment:"Barra", sets:"4-5", reps:"6-10", video:"https://www.youtube.com/embed/ultWZbUMPL8", image:"https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&q=80", description:"El rey de los ejercicios compuestos. Trabaja piernas completas y core.", tags:["fuerza","potencia","funcional"] },
@@ -242,8 +252,9 @@ const TrainerDashboard = ({ onNavigate, user }) => {
               <Icon name="bell" size={18} color={C.textMuted} />
               <span style={{ position:"absolute", top:6, right:6, width:8, height:8, background:C.orange, borderRadius:"50%", border:`2px solid ${C.card}` }} />
             </button>
-            <button onClick={onSignOut} style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:12, padding:10, cursor:"pointer" }}>
-              <Icon name="lock" size={18} color={C.textMuted} />
+            <button onClick={onSignOut} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:12, padding:"8px 12px", cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}>
+              <Icon name="lock" size={14} color={C.textMuted} />
+              <span style={{ color:C.textMuted, fontSize:12, fontWeight:600 }}>Salir</span>
             </button>
           </div>
         </div>
@@ -1432,7 +1443,7 @@ const ProgresionScreen = ({ onNavigate }) => {
 };
 
 // ─── CLIENTE: LOGROS ─────────────────────────────────────────────────────
-const LogrosScreen = () => {
+const LogrosScreen = ({ onNavigate }) => {
   const totalSessions = DB.sessions.length;
   const unlocked = LOGROS_DEF.filter(l => totalSessions >= l.req);
   const locked = LOGROS_DEF.filter(l => totalSessions < l.req);
@@ -1440,8 +1451,7 @@ const LogrosScreen = () => {
 
   return (
     <div style={{paddingBottom:20}}>
-      <div style={{background:`linear-gradient(135deg,${C.yellow}22,${C.card})`,padding:"24px 20px 16px",borderBottom:`1px solid ${C.border}`}}>
-        <p style={{color:C.textMuted,margin:"0 0 4px",fontSize:13}}>Sistema de logros</p>
+      <BackHeader title="Mis Logros 🏅" onBack={() => onNavigate("home")} />
         <h2 style={{color:C.text,margin:0,fontSize:22,fontWeight:800}}>Mis medallas 🏅</h2>
         <div style={{color:C.textMuted,fontSize:13,marginTop:6}}>{unlocked.length} de {LOGROS_DEF.length} logros desbloqueados · {totalSessions} sesiones</div>
       </div>
@@ -1512,10 +1522,7 @@ const MiRutinaScreen = ({ onNavigate }) => {
   const d = routine[day];
   return (
     <div style={{paddingBottom:20}}>
-      <div style={{background:`linear-gradient(135deg,${C.orange}22,${C.card})`,padding:"24px 20px 16px",borderBottom:`1px solid ${C.border}`}}>
-        <p style={{color:C.textMuted,margin:"0 0 4px",fontSize:13}}>Mi Rutina</p>
-        <h2 style={{color:C.text,margin:0,fontSize:22,fontWeight:800}}>Semana actual 💪</h2>
-      </div>
+      <BackHeader title="Mi Rutina" onBack={() => onNavigate("home")} />
       <div style={{padding:"16px 16px 0",display:"flex",gap:8,overflowX:"auto"}}>
         {routine.map((r,i) => (
           <button key={i} onClick={() => setDay(i)} style={{flexShrink:0,background:day===i?C.orange:C.card,border:"none",borderRadius:12,padding:"10px 16px",color:day===i?"#fff":C.textMuted,fontWeight:700,fontSize:13,cursor:"pointer"}}>{r.day}</button>
@@ -1557,10 +1564,7 @@ const MiProgresoScreen = ({ onNavigate }) => {
   const adh = [100,0,100,100,80,0];
   return (
     <div style={{paddingBottom:20}}>
-      <div style={{background:`linear-gradient(135deg,${C.green}22,${C.card})`,padding:"24px 20px 16px",borderBottom:`1px solid ${C.border}`}}>
-        <p style={{color:C.textMuted,margin:"0 0 4px",fontSize:13}}>Mi Progreso</p>
-        <h2 style={{color:C.text,margin:0,fontSize:22,fontWeight:800}}>Evolución corporal 📊</h2>
-      </div>
+      <BackHeader title="Mi Progreso" onBack={() => onNavigate("home")} />
       <div style={{padding:"16px"}}>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
           {metrics.map((m,i) => (
@@ -1620,7 +1624,7 @@ const MiProgresoScreen = ({ onNavigate }) => {
 };
 
 // ─── CLIENTE: NUTRICIÓN ──────────────────────────────────────────────────
-const MiNutricionScreen = () => {
+const MiNutricionScreen = ({ onNavigate }) => {
   const meals = [
     {time:"08:00",name:"Desayuno",desc:"Avena 80g + 3 huevos + fruta",cal:520},
     {time:"11:00",name:"Snack",desc:"Yogur griego + nueces 30g",cal:280},
@@ -1630,10 +1634,7 @@ const MiNutricionScreen = () => {
   ];
   return (
     <div style={{paddingBottom:20}}>
-      <div style={{background:`linear-gradient(135deg,${C.blue}22,${C.card})`,padding:"24px 20px 16px",borderBottom:`1px solid ${C.border}`}}>
-        <p style={{color:C.textMuted,margin:"0 0 4px",fontSize:13}}>Mi Nutrición</p>
-        <h2 style={{color:C.text,margin:0,fontSize:22,fontWeight:800}}>Plan asignado 🥗</h2>
-      </div>
+      <BackHeader title="Mi Nutrición" onBack={() => onNavigate("home")} />
       <div style={{padding:"16px"}}>
         <div style={{background:`linear-gradient(135deg,${C.orange},#FF8C5A)`,borderRadius:16,padding:"16px",marginBottom:16}}>
           <div style={{color:"#fff",fontWeight:700,fontSize:16,marginBottom:8}}>Plan Definición · Asignado por Juan</div>
@@ -1661,7 +1662,7 @@ const MiNutricionScreen = () => {
 };
 
 // ─── CLIENTE: CHAT ───────────────────────────────────────────────────────
-const MiChatScreen = () => {
+const MiChatScreen = ({ onNavigate }) => {
   const [msg, setMsg] = useState("");
   const [msgs, setMsgs] = useState([
     {id:1,from:"trainer",text:"Hola! ¿Cómo te fue con la sesión de ayer? 💪",time:"09:30"},
@@ -1675,8 +1676,12 @@ const MiChatScreen = () => {
   };
   return (
     <div style={{display:"flex",flexDirection:"column",height:"100vh"}}>
-      <div style={{background:C.card,padding:"16px 20px",borderBottom:`1px solid ${C.border}`,display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
-        <div style={{width:42,height:42,borderRadius:14,background:C.orange,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,color:"#fff",fontSize:14}}>JP</div>
+      <div style={{background:C.card,padding:"12px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+        <button onClick={() => onNavigate("home")} style={{background:C.orange+"22",border:"none",borderRadius:12,padding:"7px 12px",display:"flex",alignItems:"center",gap:6,cursor:"pointer",flexShrink:0}}>
+          <Icon name="home" size={15} color={C.orange}/>
+          <span style={{color:C.orange,fontWeight:700,fontSize:12}}>Inicio</span>
+        </button>
+        <div style={{width:38,height:38,borderRadius:12,background:C.orange,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,color:"#fff",fontSize:13,flexShrink:0}}>JP</div>
         <div><div style={{color:C.text,fontWeight:700}}>Juan (Tu Entrenador)</div><div style={{color:C.green,fontSize:12}}>● En línea</div></div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"16px",display:"flex",flexDirection:"column",gap:10,paddingBottom:80}}>
@@ -1714,8 +1719,9 @@ const ClientHomeDashboard = ({ user, onNavigate, onSignOut }) => {
             <div style={{background:C.orange+"22",borderRadius:12,padding:"8px 12px"}}>
               <span style={{color:C.orange,fontSize:13,fontWeight:700}}>🔥 12 días</span>
             </div>
-            <button onClick={onSignOut} style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"8px 10px",cursor:"pointer"}}>
-              <Icon name="lock" size={16} color={C.textMuted}/>
+            <button onClick={onSignOut} style={{background:"none",border:`1px solid ${C.border}`,borderRadius:12,padding:"8px 12px",cursor:"pointer",display:"flex",alignItems:"center",gap:6}}>
+              <Icon name="lock" size={14} color={C.textMuted}/>
+              <span style={{color:C.textMuted,fontSize:12,fontWeight:600}}>Salir</span>
             </button>
           </div>
         </div>
@@ -2151,9 +2157,9 @@ export default function JUDStudioApp({ user: initialUser, onSignOut }) {
         case "mi-progreso":   return <MiProgresoScreen onNavigate={navigate} />;
         case "progresion":    return <ProgresionScreen onNavigate={navigate} />;
         case "historial":     return <HistorialScreen onNavigate={navigate} />;
-        case "mi-logros":     return <LogrosScreen />;
-        case "mi-nutricion":  return <MiNutricionScreen />;
-        case "mi-chat":       return <MiChatScreen />;
+        case "mi-logros":     return <LogrosScreen onNavigate={navigate} />;
+        case "mi-nutricion":  return <MiNutricionScreen onNavigate={navigate} />;
+        case "mi-chat":       return <MiChatScreen onNavigate={navigate} />;
         default:              return <ClientHomeDashboard user={user} onNavigate={navigate} onSignOut={onSignOut} />;
       }
     }
