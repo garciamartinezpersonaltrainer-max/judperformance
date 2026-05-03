@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { supabase } from './supabase.js'
-import { supabase } from './supabase.js'
 
 const C = {
   bg:"#0A0B0F", card:"#12141A", card2:"#1A1D26", border:"#252836",
