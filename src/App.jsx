@@ -2176,15 +2176,7 @@ export default function JUDStudioApp({ user: initialUser, onSignOut }) {
       <div className="screen" key={screen} style={{ flex:1, overflowY:"auto", paddingBottom: !hideBotNav ? 70 : 0 }}>
         {renderScreen()}
       </div>
-      {/* Botón flotante Inicio — visible en pantallas sin nav */}
-      {!isTrainer && hideBotNav && screen !== "login" && (
-        <button onClick={() => navigate("home")} style={{ position:"fixed", top:16, right:16, zIndex:200, background:C.orange, border:"none", borderRadius:50, padding:"10px 16px", display:"flex", alignItems:"center", gap:6, cursor:"pointer", boxShadow:`0 4px 20px ${C.orange}66` }}>
-          <Icon name="home" size={16} color="#fff"/>
-          <span style={{ color:"#fff", fontWeight:800, fontSize:13 }}>Inicio</span>
-        </button>
-      )}
-      {!hideBotNav && (
-        <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:480, background:C.card, borderTop:`1px solid ${C.border}`, display:"flex", alignItems:"center", padding:"8px 0", backdropFilter:"blur(20px)", zIndex:100 }}>
+        {!hideBotNav && (<div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:480, background:C.card, borderTop:`1px solid ${C.border}`, display:"flex", alignItems:"center", padding:"8px 0", backdropFilter:"blur(20px)", zIndex:100 }}>
           {TABS.map(tab => {
             const isActive = screen === tab.id;
             return (
