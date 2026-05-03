@@ -242,8 +242,9 @@ const TrainerDashboard = ({ onNavigate, user }) => {
               <Icon name="bell" size={18} color={C.textMuted} />
               <span style={{ position:"absolute", top:6, right:6, width:8, height:8, background:C.orange, borderRadius:"50%", border:`2px solid ${C.card}` }} />
             </button>
-            <button onClick={() => onNavigate("profile")} style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:12, padding:10, cursor:"pointer" }}>
-              <Icon name="user" size={18} color={C.textMuted} />
+            <button onClick={onSignOut} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:12, padding:"8px 12px", cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}>
+              <Icon name="lock" size={14} color={C.textMuted} />
+              <span style={{ color:C.textMuted, fontSize:12, fontWeight:600 }}>Salir</span>
             </button>
           </div>
         </div>
@@ -1700,7 +1701,7 @@ const MiChatScreen = () => {
 };
 
 // ─── CLIENTE: HOME DASHBOARD (actualizado) ──────────────────────────────
-const ClientHomeDashboard = ({ user, onNavigate }) => {
+const ClientHomeDashboard = ({ user, onNavigate, onSignOut }) => {
   const logrosDesbloqueados = LOGROS_DEF.filter(l => DB.sessions.length >= l.req);
   return (
     <div style={{paddingBottom:20}}>
@@ -1714,6 +1715,10 @@ const ClientHomeDashboard = ({ user, onNavigate }) => {
             <div style={{background:C.orange+"22",borderRadius:12,padding:"8px 12px"}}>
               <span style={{color:C.orange,fontSize:13,fontWeight:700}}>🔥 12 días</span>
             </div>
+            <button onClick={onSignOut} style={{background:"none",border:`1px solid ${C.border}`,borderRadius:12,padding:"8px 12px",cursor:"pointer",display:"flex",alignItems:"center",gap:6}}>
+              <Icon name="lock" size={14} color={C.textMuted}/>
+              <span style={{color:C.textMuted,fontSize:12,fontWeight:600}}>Salir</span>
+            </button>
           </div>
         </div>
       </div>
@@ -2142,7 +2147,7 @@ export default function JUDStudioApp({ user: initialUser, onSignOut }) {
       }
     } else {
       switch(screen) {
-        case "home":          return <ClientHomeDashboard user={user} onNavigate={navigate} />;
+        case "home":          return <ClientHomeDashboard user={user} onNavigate={navigate} onSignOut={onSignOut} />;
         case "mi-rutina":     return <MiRutinaScreen onNavigate={navigate} />;
         case "sesion-activa": return <SesionActivaScreen onNavigate={navigate} onSaveSession={() => setSessionCount(DB.sessions.length)} />;
         case "mi-progreso":   return <MiProgresoScreen onNavigate={navigate} />;
@@ -2151,7 +2156,7 @@ export default function JUDStudioApp({ user: initialUser, onSignOut }) {
         case "mi-logros":     return <LogrosScreen />;
         case "mi-nutricion":  return <MiNutricionScreen />;
         case "mi-chat":       return <MiChatScreen />;
-        default:              return <ClientHomeDashboard user={user} onNavigate={navigate} />;
+        default:              return <ClientHomeDashboard user={user} onNavigate={navigate} onSignOut={onSignOut} />;
       }
     }
   };
