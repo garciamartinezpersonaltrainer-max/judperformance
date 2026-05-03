@@ -110,9 +110,16 @@ export default function Onboarding({ userId, userEmail, onComplete }) {
 
       {/* Header */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 20px' }}>
-        <button onClick={handleBack} style={{ background:'none', border:'none', cursor:'pointer', opacity: step===0?0:1, pointerEvents: step===0?'none':'auto' }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.textMuted} strokeWidth="2.5" strokeLinecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        </button>
+        {step === 0 ? (
+          <button onClick={async () => { const { supabase: sb } = await import('./supabase.js'); await sb.auth.signOut(); window.location.reload(); }}
+            style={{ background:'none', border:'none', cursor:'pointer', color:C.textDim, fontSize:13 }}>
+            Salir
+          </button>
+        ) : (
+          <button onClick={handleBack} style={{ background:'none', border:'none', cursor:'pointer' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.textMuted} strokeWidth="2.5" strokeLinecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </button>
+        )}
         <div style={{ color:C.textDim, fontSize:13 }}>{step + 1} de {STEPS.length}</div>
         <div style={{ width:24 }}/>
       </div>
